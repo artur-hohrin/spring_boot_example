@@ -1,7 +1,10 @@
 package com.artur.spring.boot.controller;
 
-import com.artur.spring.boot.model.entity.Document;
+import com.artur.spring.boot.dto.request.DocumentCreateDto;
+import com.artur.spring.boot.dto.response.DocumentResponseDto;
+import com.artur.spring.boot.exception.DocumentAddException;
 import com.artur.spring.boot.service.DocumentService;
+import com.artur.spring.boot.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +21,12 @@ public class DocumentController {
     }
 
     @GetMapping("/all")
-    public List<Document> getDocuments(){
+    public List<DocumentResponseDto> getDocuments(){
        return documentService.getDocuments();
     }
 
     @PostMapping
-    public void addDocument(@RequestBody Document document){
+    public void addDocument(@RequestBody DocumentCreateDto document) throws DocumentAddException {
         documentService.addDocuments(document);
     }
 

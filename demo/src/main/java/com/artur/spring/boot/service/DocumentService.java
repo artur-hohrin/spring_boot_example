@@ -1,10 +1,14 @@
 package com.artur.spring.boot.service;
 
+import com.artur.spring.boot.dto.request.DocumentCreateDto;
+import com.artur.spring.boot.dto.response.DocumentResponseDto;
+import com.artur.spring.boot.exception.DocumentAddException;
 import com.artur.spring.boot.model.entity.Document;
 import com.artur.spring.boot.model.repository.DocumentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DocumentService {
@@ -13,15 +17,16 @@ public class DocumentService {
     public DocumentService(DocumentRepository documentRepository) {
         this.documentRepository = documentRepository;
     }
-    public List<Document> getDocuments() {
-        return documentRepository.findAll();
+    public List<DocumentResponseDto> getDocuments() {
+        return documentRepository.findAll().stream().map(DocumentResponseDto::createDocumentDto).collect(Collectors.toList());
     }
 
-    public void addDocuments(Document document){
+    public void addDocuments(DocumentCreateDto document) throws DocumentAddException {
         if(documentRepository.findBySeriesAndNumber(document.getSeries(), document.getNumber()) != null){
-            System.out.println("Такой документ уже существует");
+            throw new DocumentAddException("Такой документ уже существует");
         }
-        documentRepository.save(document);
+        Document modelDocument = Document.createModelDocument(document);
+        documentRepository.save(modelDocument);
         System.out.println("Документ успешно сохранен");
     }
 

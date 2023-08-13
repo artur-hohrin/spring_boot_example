@@ -1,7 +1,8 @@
 package com.artur.spring.boot.controller;
 
+import com.artur.spring.boot.dto.request.PeopleCreateDto;
 import com.artur.spring.boot.dto.response.PeopleResponseDto;
-import com.artur.spring.boot.model.entity.People;
+import com.artur.spring.boot.exception.PeopleAddException;
 import com.artur.spring.boot.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class PeopleController {
     }
 
     @PostMapping
-    public void addPeople(@RequestBody People people){
+    public void addPeople(@RequestBody PeopleCreateDto people) throws PeopleAddException {
         peopleService.addPeople(people);
     }
 
