@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.artur.spring.boot;
 
 
 import org.springframework.boot.SpringApplication;
