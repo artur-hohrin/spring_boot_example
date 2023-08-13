@@ -1,11 +1,11 @@
 package com.artur.spring.boot.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "type_document")
+@Data
 public class TypeDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
